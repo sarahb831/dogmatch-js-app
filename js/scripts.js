@@ -4,8 +4,7 @@ function executeProgram() { // repository wrapped in IIFE
   var pokemonRepository = (function() {
 
     var repository = []; // to hold list of Pokemon characters
-    var bigWeight = 85;
-
+  
     var pikachu = {
       name: 'Pikachu',
       height: 0.4,
