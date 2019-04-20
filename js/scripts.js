@@ -4,11 +4,25 @@ function executeProgram() {
   var repository = []; // to hold list of Pokemon characters
   var bigWeight = 85;
 
-  var bulbasaur = {
+  var pikachu = {
+    name: 'Pikachu',
+    height: 0.4,
+    weight: 6.0,
+    types: ['electric']
+  };
+
+    var bulbasaur = {
     name: 'Bulbasaur',
     height: 0.7,
     weight: 6.9,
     types: ['grass', 'poison']
+  };
+
+  var mew = {
+  name: 'Mew',
+  height: 0.4,
+  weight: 4.0,
+  types: ['psychic']
   };
 
   var blastoise = {
