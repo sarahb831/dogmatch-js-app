@@ -1,4 +1,4 @@
-function executeProgram() {
+function executeProgram() { // repository wrapped in IIFE
   var data = {};
 
   var pokemonRepository = (function() {
@@ -63,18 +63,20 @@ function executeProgram() {
       getAll: getAll
     };
   })();
+
   /*
   print out the list of Pokemon names and weights, noting any with weight
   greater than 'bigWeight'
   */
-  for (var i = 0; i < repository.length; i++) {
-    var pokemonComment = repository[i].name + '(weight: ' + repository[i].weight + ' kg)';
 
-    if (repository[i].weight > bigWeight) {
+  pokemonRepository.getAll().forEach(function(pokemon) {
+    var pokemonComment = pokemon.name + ' (weight: ' + pokemon.weight + ' kg)';
+
+    if (pokemon.weight > 85) {
       pokemonComment += ' - Wow, that\'s big!';
     }
 
     document.write('<p>' + pokemonComment + '</p>');
-  }
+  });
 }
 executeProgram();
