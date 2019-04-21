@@ -80,7 +80,7 @@
 
     function add(pokemon) {
       if ((typeof pokemon === 'object') && ((isRepositoryEmpty(repository) ||
-        (isKeyMatch(respository[0], pokemon))))){
+        (isKeyMatch(repository[0], pokemon))))){
           repository.push(pokemon);
         }
       else console.warn("Not valid pokemon data, item not added!");
@@ -106,5 +106,16 @@
     document.write('<p>' + pokemonComment + '</p>');
   });
 
+  var tornadus = {
+    name: 'Tornadus',
+    height: 1.5,
+    weight: 63,
+    types: ['flying']
+  };
+
+  pokemonRepository.add(tornadus);
+  pokemonRepository.getAll().forEach(function(pokemon) {
+    document.write('<br> Name: ' + pokemon.name);
+  });
 
 })();
