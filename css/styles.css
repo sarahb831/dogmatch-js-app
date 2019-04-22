@@ -1,4 +1,41 @@
 body {
   background-color: lightblue;
+  color: black;
+  font-family: 'Indie Flower', cursive;
+  line-height: 1;
+  margin-left: 40px;
+  font-size: 20px;
   font-weight: 700;
+}
+
+header {
+  position: relative;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 40px;
+  height: auto;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+}
+
+/* for smaller displays */
+@media all and (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media all and (min-width: 500px) and (max-width: 750px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media all and (max-width: 750px) {
+  .grid {
+    grid-gap: 10px;
+  }
 }
