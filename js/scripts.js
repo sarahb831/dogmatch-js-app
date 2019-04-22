@@ -103,7 +103,7 @@
       pokemonComment += ' - Wow, that\'s big!';
     }
 
-    document.write('<p>' + pokemonComment + '</p>');
+  //  document.write('<p>' + pokemonComment + '</p>');
   });
 
   var tornadus = {
@@ -114,8 +114,9 @@
   };
 
   pokemonRepository.add(tornadus);
+//  document.write('Names after add:');
   pokemonRepository.getAll().forEach(function(pokemon) {
-    document.write('<br> Name: ' + pokemon.name);
+//    document.write('<br> Name: ' + pokemon.name);
   });
 
 })();
