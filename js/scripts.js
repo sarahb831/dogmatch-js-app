@@ -101,17 +101,20 @@
 
   function addListItem(pokemonName) {
     // add new DOM li element
-    var $element = document.querySelector('.item-list');
-    var $newLi = document.createElement('li');
-    $newLi.setAttribute('id', pokemonName);
-    $newLi.classList.add('item-list__item');
-    $newLi.innerText = pokemonName;
-    $element.appendChild($newLi);
+    var element = document.querySelector('.item-list');
+    var newLi = document.createElement('li');
+    newLi.setAttribute('id', pokemonName);
+    newLi.classList.add('item-list__item');
+
+    var button = document.createElement('button');
+    button.innerText = pokemonName;
+    newLi.appendChild(button);
+    element.appendChild(newLi);
 
 // can't get both button and li added to DOM for some reason
 
-    $newLi.addEventListener('click', function(pokemon){
-      showDetails(pokemon);
+    newLi.addEventListener('click', function(event){
+      showDetails(event.target.innerText);
     });
   }
 
