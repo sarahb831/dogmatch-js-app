@@ -92,18 +92,33 @@
     };
   })();
 
-  /*
-  print out the list of Pokemon names and weights, noting any with weight
-  greater than 85
-  */
+/* show details of item
+*/
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+
+
+  function addListItem(pokemonName) {
+    // add new DOM li element
+    var $element = document.querySelector('.item-list');
+    var $newLi = document.createElement('li');
+    $newLi.setAttribute('id', pokemonName);
+    $newLi.classList.add('item-list__item');
+    $newLi.innerText = pokemonName;
+    $element.appendChild($newLi);
+
+// can't get both button and li added to DOM for some reason
+
+    $newLi.addEventListener('click', function(pokemon){
+      showDetails(pokemon);
+    });
+  }
+
+
+
   pokemonRepository.getAll().forEach(function(pokemon) {
-    var pokemonComment = pokemon.name + ' (weight: ' + pokemon.weight + ' kg)';
-
-    if (pokemon.weight > 85) {
-      pokemonComment += ' - Wow, that\'s big!';
-    }
-
-  //  document.write('<p>' + pokemonComment + '</p>');
+    addListItem(pokemon.name);
   });
 
   var tornadus = {
@@ -112,11 +127,10 @@
     weight: 63,
     types: ['flying']
   };
-
+/* to test add() function
   pokemonRepository.add(tornadus);
-//  document.write('Names after add:');
   pokemonRepository.getAll().forEach(function(pokemon) {
-//    document.write('<br> Name: ' + pokemon.name);
+//   document.write('<br> Name: ' + pokemon.name);
   });
-
+*/
 })();
