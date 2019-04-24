@@ -4,6 +4,7 @@
   var pokemonRepository = (function() {
 
     var repository = []; // to hold list of Pokemon characters
+    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     var pikachu = {
       name: 'Pikachu',
@@ -74,6 +75,24 @@
     }
   }
 
+  function loadList(){
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function(item) {
+        var pokemon = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemon);
+      });
+    }).catch(function(e) {
+      console.error(e);
+    })
+  }
+
+  function loadDetails()
+
     function getAll() {
       return repository;
     }
@@ -89,8 +108,17 @@
     return {
       add: add,
       getAll: getAll
+      search: search,
+      loadList: loadList
     };
   })();
+
+  pokemonRepository.loadList().then(function() {
+    // now data is loaded
+    pokemonRepository.getAll().forEach(function(pokemon){
+      addListItem(pokemon);
+    });
+  });
 
 /* show details of item
 */
