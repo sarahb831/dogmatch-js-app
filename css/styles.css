@@ -44,6 +44,18 @@ button {
   transition: 0.8s opacity;
 }
 
+button:hover,
+button:focus,
+a.button:hover,
+a.button:focus {
+  /* mouse turns to hand when hovering */
+  cursor: pointer;
+  background-color: blue;
+  color: white;
+  /* reduce opacity to 80% */
+  opacity: 0.8;
+}
+
 footer {
   clear: both;
   text-align: center;
