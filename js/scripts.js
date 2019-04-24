@@ -4,51 +4,8 @@
   var pokemonRepository = (function() {
 
     var repository = []; // to hold list of Pokemon characters
-    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-    var pikachu = {
-      name: 'Pikachu',
-      height: 0.4,
-      weight: 6.0,
-      types: ['electric']
-    };
-
-    var bulbasaur = {
-      name: 'Bulbasaur',
-      height: 0.7,
-      weight: 6.9,
-      types: ['grass', 'poison']
-    };
-
-    var mew = {
-      name: 'Mew',
-      height: 0.4,
-      weight: 4.0,
-      types: ['psychic']
-    };
-
-    var blastoise = {
-      name: 'Blastoise',
-      height: 1.6,
-      weight: 85.5,
-      types: ['water']
-    };
-
-    var spearow = {
-      name: 'Spearow',
-      height: 0.3,
-      weight: 2,
-      types: ['flying', 'normal']
-    };
-
-    var nidoqueen = {
-      name: 'Nidoqueen',
-      height: 1.3,
-      weight: 60,
-      types: ['ground', 'poison']
-    };
-
-    var repository = [pikachu, mew, bulbasaur, blastoise, spearow, nidoqueen];
 
     /* check for empty repository
         return true if empty, false if not
@@ -60,7 +17,7 @@
       return true;
     }
 
-    /* checks each key for two objects, returning true if all match, false
+    /* compares keys for two objects, returning true if all match, false
         otherwise
     */
     function isKeyMatch(object1, object2) {
@@ -75,6 +32,9 @@
     }
   }
 
+  /*
+  get the list of items from the api
+  */
   function loadList(){
     return fetch(apiUrl).then(function (response) {
       return response.json();
@@ -91,6 +51,9 @@
     })
   }
 
+  /*
+  load the details for the specified items
+  */
   function loadDetails(item) {
     var url = item.detailsUrl;
     return fetch(url).then(function (response) {
@@ -99,20 +62,32 @@
       // now add details to the list__item
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
+      item.weight = details.weight;
       item.types = Object.keys(details.types);
     }).catch(function(e) {
       console.error(e);
     });
   }
 
-    function search(item) {
-      // return details for specified item
+    /*
+    returns the object from the repository for the given name value
+    */
+    function search(name) {
+      for (var i = 0; i < repository.length; i++) {
+          if (repository[i].name === name) {
+            return repository[i];
+          }
+        }
+      return null; // if no match found
     }
 
     function getAll() {
       return repository;
     }
 
+    /*
+    add item to isRepositoryEmpty
+    */
     function add(pokemon) {
       if ((typeof pokemon === 'object') && ((isRepositoryEmpty(repository) ||
         (isKeyMatch(repository[0], pokemon))))){
@@ -137,49 +112,37 @@
     });
   });
 
-/* show details of item
-*/
-  function showDetails(item) {
+  /*
+  show details of item
+  */
+  function showDetails(itemName) {
+    var item = pokemonRepository.search(itemName); // get object for this name
     pokemonRepository.loadDetails(item).then(function() {
-      console.log(item); });
+      console.log('Details for '+item.name+':');
+      console.log('=======================');
+      console.log('Height: '+item.height);
+      console.log('Weight: '+item.weight);
+    });
   }
 
-
-  function addListItem(pokemonName) {
+  /*
+  adds item to display as a button
+  */
+  function addListItem(pokemon) {
     // add new DOM li element
     var $element = document.querySelector('.item-list');
     var newLi = document.createElement('li');
-    newLi.setAttribute('id', pokemonName);
+    newLi.setAttribute('id', pokemon.name);
     newLi.classList.add('item-list__item');
 
     var button = document.createElement('button');
-    button.innerText = pokemonName;
+    button.innerText = pokemon.name;
     newLi.appendChild(button);
     $element.appendChild(newLi);
-
-// can't get both button and li added to DOM for some reason
-
     newLi.addEventListener('click', function(event){
       showDetails(event.target.innerText);
     });
   }
 
 
-
-  pokemonRepository.getAll().forEach(function(pokemon) {
-    addListItem(pokemon.name);
-  });
-
-  var tornadus = {
-    name: 'Tornadus',
-    height: 1.5,
-    weight: 63,
-    types: ['flying']
-  };
-/* to test add() function
-  pokemonRepository.add(tornadus);
-  pokemonRepository.getAll().forEach(function(pokemon) {
-//   document.write('<br> Name: ' + pokemon.name);
-  });
-*/
 })();
