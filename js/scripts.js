@@ -1,5 +1,7 @@
-(function () { // repository wrapped in IIFE
+(function () { // IIFE wrapper
   var data = {};
+
+  var $modalContainer = document.querySelector('#modal-container');
 
   var pokemonRepository = (function() {
 
@@ -52,7 +54,7 @@
   }
 
   /*
-  load the details for the specified items
+  load the details for the specified item
   */
   function loadDetails(item) {
     var url = item.detailsUrl;
@@ -86,7 +88,7 @@
     }
 
     /*
-    add item to isRepositoryEmpty
+    add item to repository
     */
     function add(pokemon) {
       if ((typeof pokemon === 'object') && ((isRepositoryEmpty(repository) ||
@@ -103,7 +105,7 @@
       loadList: loadList,
       loadDetails: loadDetails
     };
-  })();
+  })(); // pokemonRepository end
 
   pokemonRepository.loadList().then(function() {
     // now data is loaded
@@ -112,18 +114,54 @@
     });
   });
 
+  function showModal(item) {
+    $modalContainer.innerText = '';
+    var modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    // add new modal content
+    var closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'Close';
+    closeButtonElement.addEventListener('click', hideModal);
+
+    var titleElement = document.createElement('h1');
+    titleElement.innerText = item.name;
+
+    var heightElement = document.createElement('p');
+    heightElement.innerText = 'Height: ' + item.height;
+
+    var weightElement = document.createElement('p');
+    weightElement.innerText = 'Weight: ' + item.weight;
+
+    // add details for image
+    var imageElement = document.createElement('img');
+    imageElement.setAttribute('src', item.imageUrl);
+    imageElement.classList.add('pokemon-image');
+
+    modal.appendChild(closeButtonElement);
+    modal.appendChild(titleElement);
+    modal.appendChild(imageElement);
+    modal.appendChild(heightElement);
+    modal.appendChild(weightElement);
+
+    $modalContainer.appendChild(modal);
+    $modalContainer.classList.add('is-visible');
+  } // end showModal()
+
+  function hideModal() {
+    $modalContainer.classList.remove('is-visible');
+  }
+
   /*
   show details of item
   */
   function showDetails(itemName) {
     var item = pokemonRepository.search(itemName); // get object for this name
     pokemonRepository.loadDetails(item).then(function() {
-      console.log('Details for '+item.name+':');
-      console.log('=======================');
-      console.log('Height: '+item.height);
-      console.log('Weight: '+item.weight);
+      showModal(item);
     });
-  }
+  } // end showDetails()
 
   /*
   adds item to display as a button
@@ -142,7 +180,21 @@
     newLi.addEventListener('click', function(event){
       showDetails(event.target.innerText);
     });
-  }
+  } // end addListItem()
 
+  // exit modal gracefully on Escape key press
+  window.addEventListener('keydown',(e) => {
+    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+      hideModal();
+    }
+  });
+
+  $modalContainer.addEventListener('click',(e) => {
+    // only close if user clicks on overlay
+    var target = e.target;
+    if (target === $modalContainer) {
+      hideModal();
+    }
+  });
 
 })();

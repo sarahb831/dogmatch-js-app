@@ -56,6 +56,47 @@ a.button:focus {
   opacity: 0.8;
 }
 
+/* default modal appearance */
+#modal-container {
+  display: none;
+}
+
+#modal-container.is-visible {
+  /* center the modal */
+  display: grid;
+  text-align: left;
+  position: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 25%;
+  /*margin-left: 50%; */
+  left: 50px;
+  width: 50%;
+  height: auto;
+  background: rgba(0,0,255, 0.8);
+  color: white;
+
+  /* show it above other content */
+  z-index: 999;
+
+  /* allow scrolling if the screen is not high enough*/
+  overflow: auto;
+}
+
+.modal-close {
+  float: right;
+  border: 0;
+  background: none;
+  color: #777;
+  text-decoration: underline;
+}
+
+.pokemon-image {
+  float: right;
+  margin-right: 10px;
+  width: 50%;
+}
+
 footer {
   clear: both;
   text-align: center;
