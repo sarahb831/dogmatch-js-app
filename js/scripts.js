@@ -129,10 +129,10 @@
     titleElement.innerText = item.name;
 
     var heightElement = document.createElement('p');
-    heightElement.innerText = 'Height: ' + item.height;
+    heightElement.innerText = 'Height: ' + item.height + ' m';
 
     var weightElement = document.createElement('p');
-    weightElement.innerText = 'Weight: ' + item.weight;
+    weightElement.innerText = 'Weight: ' + item.weight + ' kg';
 
     // add details for image
     var imageElement = document.createElement('img');
