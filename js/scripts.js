@@ -3,10 +3,11 @@
   var data = {};
 
   var $modalContainer = document.querySelector('#modal-container');
+  var $message = document.querySelector('#message');
 
   var pokemonRepository = (function() {
     var repository = []; // to hold list of Pokemon characters
-    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
+    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     /* check for empty repository
         return true if empty, false if not
@@ -37,11 +38,13 @@
   get the list of items from the api
   */
     function loadList() {
+      showLoadingMessage('Loading Pokemon list, please wait...');
       return fetch(apiUrl)
         .then(function(response) {
           return response.json();
         })
         .then(function(json) {
+          hideLoadingMessage();
           json.results.forEach(function(item) {
             var pokemon = {
               name: item.name,
@@ -60,8 +63,10 @@
   */
     function loadDetails(item) {
       var url = item.detailsUrl;
+      showLoadingMessage('Loading Pokemon details, please wait...');
       return fetch(url)
         .then(function(response) {
+          hideLoadingMessage();
           return response.json();
         })
         .then(function(details) {
@@ -159,6 +164,14 @@
     $modalContainer.classList.remove('is-visible');
   }
 
+  function showLoadingMessage(message) {
+    $message.innerText = message;
+    $message.classList.add('is-visible');
+  } // end showLoadingMessage()
+
+  function hideLoadingMessage() {
+    $message.classList.remove('is-visible');
+  }
   /*
   show details of item
   */
