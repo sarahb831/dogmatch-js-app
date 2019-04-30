@@ -1,7 +1,6 @@
 (function() {
   // IIFE wrapper
-  var data = {};
-
+  
   var $modalContainer = document.querySelector('#modal-container');
   var $message = document.querySelector('#message');
 
@@ -54,7 +53,9 @@
           });
         })
         .catch(function(e) {
+          /* eslint-disable no-console */
           console.error(e);
+          /* eslint-enable no-console */
         });
     }
 
@@ -77,7 +78,9 @@
           item.types = Object.keys(details.types);
         })
         .catch(function(e) {
+          /* eslint-disable no-console */
           console.error(e);
+          /* eslint-enable no-console */
         });
     }
 
@@ -106,7 +109,9 @@
         (isRepositoryEmpty(repository) || isKeyMatch(repository[0], pokemon))
       ) {
         repository.push(pokemon);
+        /* eslint-disable no-console */
       } else console.warn('Not valid pokemon data, item not added!');
+        /* eslint-enable no-console */
     }
 
     return {
